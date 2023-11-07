@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\File;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome',[
+        'posts' => Post::all()
+    ]);
 });
 
 Route::get('post/{post}', function ($id) {
@@ -15,35 +17,39 @@ Route::get('post/{post}', function ($id) {
     ]);
 });
 
-Route::get('/post', function () {
-    $files =  File::files(resource_path("posts/"));
+// Route::get('/post', function () {
+//     // $files =  File::files(resource_path("posts/"));
 
-    $posts = collect($files)
-        ->map(function ($file) {
-            $document = YamlFrontMatter::parseFile($file);
+//     // $posts = collect($files)
+//     //     ->map(function ($file) {
+//     //         $document = YamlFrontMatter::parseFile($file);
 
-            return new Post(
-                $document->title,
-                $document->excerpt,
-                $document->date,
-                $document->body(),
-                $document->slug
-            );
-        });
+//     //         return new Post(
+//     //             $document->title,
+//     //             $document->excerpt,
+//     //             $document->date,
+//     //             $document->body(),
+//     //             $document->slug
+//     //         );
+//     //     });
 
-    foreach ($files as $file) {
-        $document = YamlFrontMatter::parseFile($file);
+//     // foreach ($files as $file) {
+//     //     $document = YamlFrontMatter::parseFile($file);
 
-        $posts[] = new Post(
-            $document->title,
-            $document->excerpt,
-            $document->date,
-            $document->body(),
-            $document->slug
-        );
-    }
+//     //     $posts[] = new Post(
+//     //         $document->title,
+//     //         $document->excerpt,
+//     //         $document->date,
+//     //         $document->body(),
+//     //         $document->slug
+//     //     );
+//     // }
 
+
+// });
+
+Route::get('/post', function(){
     return view('post', [
-        'posts' => $posts
+        'posts' => Post::all()
     ]);
 });

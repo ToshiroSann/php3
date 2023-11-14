@@ -9,12 +9,14 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 Route::get('/', function () {
     return view('welcome', [
         'posts' => Post::all(),
-        'blogg' => Blogg::query()->skip(0)->take(2)->get(),
-        'blogg1' => Blogg::all(),
+        'blogg' => Blogg::all(),
         'search' => Blogg::where("title")->orWhere("%%"),
 
     ]);
 });
+
+Route::get('/results', 'SearchController@search')->name('search');
+
 
 Route::get('post/{post}', function ($id) {
     return view('post', [

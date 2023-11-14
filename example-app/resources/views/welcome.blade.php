@@ -78,10 +78,10 @@
                     </svg>
                 </div>
  
-                <?php $mysqli = "SELECT * FROM bloggs WHERE title LIKE '%%';" ?>
-                 <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl px-3 py-2">
-                    <form role="search" method="GET" action="">
-                        <input type="text" name="search" value="" placeholder="Find something" id="search"<?=$search->title ?>
+                <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl px-3 py-2">
+                    <form method="GET" action="{{ route('search') }}">
+                        <!-- nog mee bezig  -->
+                        <input type="text" name="query" placeholder="Find something"
                                class="bg-transparent placeholder-black font-semibold text-sm">
                     </form>
                 </div>
@@ -89,14 +89,20 @@
         </header>
  
         <main class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">
-        @foreach ($blogg as $Blogg)
+ 
+        @php ($count = 0)
+ 
+ 
+        @foreach ($blogg as $bbb)
+        @if ($count < 1)
+ 
+ 
             <article
                 class="transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl">
                 <div class="py-6 px-5 lg:flex">
                     <div class="flex-1 lg:mr-8">
-                        <img src="<?= $Blogg->url ?>" alt="Blog Post illustration" class="rounded-xl">
+                        <img src="<?= $bbb->url ?>" alt="Blog Post illustration" class="rounded-xl">
                     </div>
- 
                     <div class="flex-1 flex flex-col justify-between">
                         <header class="mt-8 lg:mt-0">
                             <div class="space-x-2">
@@ -111,31 +117,31 @@
  
                             <div class="mt-4">
                                 <h1 class="text-3xl">
-                                <?= $Blogg->title ?>
+                                <?= $bbb->title ?>
                                 </h1>
  
                                 <span class="mt-2 block text-gray-400 text-xs">
-                                        Published <time><?= $Blogg->updated_at ?></time>
+                                        Published <time><?= $bbb->updated_at ?></time>
                                     </span>
                             </div>
                         </header>
  
                         <div class="text-sm mt-2">
                             <p>
-                            <?= $Blogg->excerpt ?>
+                            <?= $bbb->excerpt ?>
                             </p>
  
                             <p class="mt-4">
-                            <?= $Blogg->body ?>
+                            <?= $bbb->body ?>
                             </p>
                         </div>
  
                         <footer class="flex justify-between items-center mt-8">
                             <div class="flex items-center text-sm">
-                                <img src="<?= $Blogg->icon ?>" alt="Lary avatar" style="max-width: 60px; border-radius: 10px;">
+                                <img src="<?= $bbb->icon ?>" alt="Lary avatar" style="max-width: 60px; border-radius: 10px;">
                                 <div class="ml-3">
-                                    <h5 class="font-bold"><?= $Blogg->user ?></h5>
-                                    <h6><?= $Blogg->icon_tekt ?></h6>
+                                    <h5 class="font-bold"><?= $bbb->user ?></h5>
+                                    <h6><?= $bbb->icon_tekt ?></h6>
                                 </div>
                             </div>
  
@@ -147,16 +153,23 @@
                         </footer>
                     </div>
                 </div>
-                @endforeach
             </article>
+            @php ($count++)
+            @endif
+            @endforeach
+ 
             <div class="lg:grid lg:grid-cols-2">
-            @foreach ($blogg as $Blogg)
+            @php ($count = 0)
+            @foreach ($blogg as $bbb)
+            @if($count > 0)
+            @if($count < 3)
+ 
                 <article
                     class="transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl">
                    
                     <div class="py-6 px-5">
                         <div>
-                            <img src="<?= $Blogg->url ?>" alt="Blog Post illustration" class="rounded-xl">
+                            <img src="<?= $bbb->url ?>" alt="Blog Post illustration" class="rounded-xl">
                         </div>
  
                         <div class="mt-8 flex flex-col justify-between">
@@ -173,31 +186,31 @@
  
                                 <div class="mt-4">
                                     <h1 class="text-3xl">
-                                        <?= $Blogg->title ?>
+                                        <?= $bbb->title ?>
                                     </h1>
  
                                     <span class="mt-2 block text-gray-400 text-xs">
-                                        Published <time><?= $Blogg->updated_at ?></time>
+                                        Published <time><?= $bbb->updated_at ?></time>
                                     </span>
                                 </div>
                             </header>
  
                             <div class="text-sm mt-4">
                                 <p>
-                                <?= $Blogg->excerpt ?>
+                                <?= $bbb->excerpt ?>
                                 </p>
  
                                 <p class="mt-4">
-                                <?= $Blogg->body ?>
+                                <?= $bbb->body ?>
                                 </p>
                             </div>
  
                             <footer class="flex justify-between items-center mt-8">
                                 <div class="flex items-center text-sm">
-                                    <img src="<?= $Blogg->icon ?>" alt="Lary avatar"  style="max-width: 60px; border-radius: 10px;">
+                                    <img src="<?= $bbb->icon ?>" alt="Lary avatar"  style="max-width: 60px; border-radius: 10px;">
                                     <div class="ml-3">
-                                        <h5 class="font-bold"><?= $Blogg->user ?></h5>
-                                        <h6><?= $Blogg->icon_tekt ?></h6>
+                                        <h5 class="font-bold"><?= $bbb->user ?></h5>
+                                        <h6><?= $bbb->icon_tekt ?></h6>
                                     </div>
                                 </div>
  
@@ -212,16 +225,23 @@
                         </div>
                     </div>
                 </article>
+           
+                @endif
+                @endif
+                @php ($count++)
                 @endforeach
  
             </div>
  
             <div class="lg:grid lg:grid-cols-3">
-                @foreach ($blogg as $Blogg)
+            @php ($count = 0)
+            @foreach ($blogg as $bbb)
+            @if($count > 2)
+            @if($count < 6)
                 <article class="transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl">
                     <div class="py-6 px-5">
                         <div>
-                            <img src="<?= $Blogg->url ?>" alt="Blog Post illustration" class="rounded-xl">
+                            <img src="<?= $bbb->url ?>" alt="Blog Post illustration" class="rounded-xl">
                         </div>
        
  
@@ -238,30 +258,29 @@
  
                                 <div class="mt-4">
                                     <h1 class="text-3xl">
-                                    <?= $Blogg->title ?>
-                                    </h1>
+                                    <?= $bbb->title ?>
  
                                     <span class="mt-2 block text-gray-400 text-xs">
-                                        Published <time><?= $Blogg->updated_at ?></time>
+                                        Published <time><?= $bbb->updated_at ?></time>
                                     </span>
                                 </div>
                             </header>
  
                             <div class="text-sm mt-4">
                                 <p>
-                                    <?= $Blogg->excerpt ?>
+                                    <?= $bbb->excerpt ?>
                                 </p>
                                 <p class="mt-4">
-                                    <?= $Blogg->body ?>
+                                    <?= $bbb->body ?>
                                 </p>
                             </div>
  
                             <footer class="flex justify-between items-center mt-8">
                                 <div class="flex items-center text-sm">
-                                    <img src="<?= $Blogg->icon ?>" alt="Lary avatar" style="max-width: 60px; border-radius: 10px;">
+                                    <img src="<?= $bbb->icon ?>" alt="Lary avatar" style="max-width: 60px; border-radius: 10px;">
                                     <div class="ml-3">
-                                        <h5 class="font-bold"><?= $Blogg->user ?></h5>
-                                        <h6><?= $Blogg->icon_tekt ?></h6>
+                                        <h5 class="font-bold"><?= $bbb->user ?></h5>
+                                        <h6><?= $bbb->icon_tekt ?></h6>
                                     </div>
                                 </div>
  
@@ -276,6 +295,9 @@
                         </div>
                     </div>
                 </article>
+                @endif
+                @endif
+                @php ($count++)
                 @endforeach
             </div>
         </main>
@@ -309,4 +331,7 @@
         </footer>
     </section>
 </body>
+ 
+ 
+ 
  

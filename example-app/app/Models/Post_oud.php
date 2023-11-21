@@ -1,11 +1,11 @@
 <?php
- 
+
 namespace App\Models;
- 
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\File;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
- 
+
 class Post{
     public static function find($slug)
     {
@@ -13,10 +13,10 @@ class Post{
     }
     public static function all()
     {
-        return collect(File::files(resource_path("posts/")))
+        return collect(File::files(resource_path("post/")))
             ->map(function ($file){
                 $document = YamlFrontMatter::parseFile($file);
- 
+
                 return new Post(
                     $document->title,
                     $document->excerpt,
@@ -25,14 +25,14 @@ class Post{
                     $document->slug
                 );
             })
-                        ->sortByDesc('date');
+						->sortByDesc('date');
     }
     public $title;
     public $excerpt;
     public $date;
     public $body;
     public $slug;
- 
+
     public function __construct($title, $excerpt, $date, $body, $slug)
     {
         $this->title = $title;

@@ -6,12 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('blog', function (Blueprint $table) {
+        Schema::create('bloggs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->text('excerpt');
@@ -21,15 +18,12 @@ return new class extends Migration
             $table->text('icon');
             $table->text('icon_name');
             $table->text('icon_tekt');
-            $table->timestamp('published_at')->nullable();
+            $table->timestamps();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
+    
     public function down(): void
     {
-        //
+        Schema::dropIfExists('bloggs');
     }
 };

@@ -15,12 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->string('comment');
+            $table->text('comment');
             $table->timestamps();
             $table->timestamp('published_at')->nullable();
         });
     }
-
     /**
      * Reverse the migrations.
      */
@@ -29,3 +28,4 @@ return new class extends Migration
         Schema::dropIfExists('comments');
     }
 };
+
